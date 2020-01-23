@@ -1,28 +1,40 @@
+import io from 'socket.io-client'
 import { SOCKET_URL, ACTION_NAMES } from './config'
 
-class Room {
-  connected = false
-
-  constructor(roomNumber) {
-    this.ws = new WebSocket(`${SOCKET_URL}/${roomNumber}/0`)
-    this.ws.onopen = () => {
-      this.connected = true
-    }
-    this.ws.onerror = e => {
-      console.error(e.message)
-    }
-    this.ws.onmessage = e => {
-      console.error(e)
-    }
+class Socket {
+  context = {
+    user_id: null,
+    room_id: null,
   }
 
-  newRoom() {
-    this.ws.send(JSON.stringify({ action: ACTION_NAMES.NEW_ROOM }))
+  constructor() {
+    this.socket = io(`${SOCKET_URL}/`)
   }
 
-  sendAction() {
-    this.ws.send(JSON.stringify({ action: ACTION_NAMES.JOIN_ROOM }))
+  async newRoom() {
+    return new Promise((resolve, reject) => {
+      this.socket.emit(ACTION_NAMES.NEW_ROOM, this.context, data => {
+        resolve(data)
+      })
+    })
+  }
+
+  async joinRoom(id) {
+    return new Promise((resolve, reject) => {
+      if (this.context.room_id) {
+        resolve({ room_id: this.context.room_id })
+      }
+
+      this.socket.emit(
+        ACTION_NAMES.JOIN_ROOM,
+        { ...this.context, room_id: id },
+        data => {
+          this.context.room_id = data.room_id
+          resolve(data)
+        },
+      )
+    })
   }
 }
 
-export default Room
+export default Socket
