@@ -12,8 +12,7 @@ io.on('connection', socket => {
   socket.user_id = uuid()
   console.log('User connected: ', socket.user_id)
 
-  socket.on(ACTION_NAMES.NEW_GAME, (msg, callback) => {
-    console.log('> new_game: ', msg)
+  socket.on(ACTION_NAMES.NEW_GAME, (_, callback) => {
     const new_game_id = uuid()
     games.push(new_game_id)
     socket.join(new_game_id)
@@ -29,7 +28,6 @@ io.on('connection', socket => {
       return
     }
 
-    console.log('> join_game: ', game_id)
     socket.join(game_id)
 
     io.in(game_id).emit(ACTION_NAMES.NEW_PLAYER, socket.user_id)
