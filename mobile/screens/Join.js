@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Button, View, TextInput, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import { Button, TextInput } from 'react-native-paper'
 import { joinGame } from '../socket'
 
 export default function Join({ navigation: { navigate } }) {
@@ -27,11 +28,14 @@ export default function Join({ navigation: { navigate } }) {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
+        label="Room id"
         value={value}
         maxLength={4}
         onChangeText={onChangeText}
       />
-      <Button title="Join" onPress={() => onValid(true)} />
+      <Button mode="outlined" onPress={() => onValid(true)}>
+        Join
+      </Button>
     </View>
   )
 }
@@ -43,7 +47,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
+    width: 200,
+    marginBottom: 18,
+    backgroundColor: 'transparent',
+    textAlign: 'center',
   },
 })

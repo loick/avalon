@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Button, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { Button, Title } from 'react-native-paper'
 import { createGame } from '../socket'
 
 const createRoomButton = navigate => {
@@ -19,13 +20,24 @@ const createRoomButton = navigate => {
     }
   }, [clicked])
 
-  return <Button title="Create" onPress={() => setCliked(true)} />
+  return (
+    <Button mode="outlined" onPress={() => setCliked(true)}>
+      Create
+    </Button>
+  )
 }
 
 export default function Home({ navigation: { navigate } }) {
   return (
     <View style={styles.container}>
-      <Button title="Join" onPress={() => navigate('Join')} />
+      <Title style={styles.title}>Avalon</Title>
+      <Button
+        style={styles.joinButton}
+        mode="outlined"
+        onPress={() => navigate('Join')}
+      >
+        Join
+      </Button>
       {createRoomButton(navigate)}
     </View>
   )
@@ -40,5 +52,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  title: {
+    fontSize: 32,
+    marginBottom: 20,
+  },
+  joinButton: {
+    marginBottom: 20,
   },
 })
