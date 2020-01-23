@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4'
 import express from 'express'
-import { ACTION_NAMES, PORT } from '../mobile/config'
+import { ACTION_NAMES, ERRORS, PORT } from '../mobile/config'
 
 const app = express()
 const http = require('http').createServer(app)
@@ -12,8 +12,7 @@ io.on('connection', socket => {
   socket.user_id = uuid()
   console.log('User connected: ', socket.user_id)
 
-  socket.on(ACTION_NAMES.NEW_GAME, (msg, callback) => {
-    console.log('> new_game: ', msg)
+  socket.on(ACTION_NAMES.NEW_GAME, (_, callback) => {
     const new_game_id = uuid()
     games.push(new_game_id)
     socket.join(new_game_id)
@@ -25,11 +24,10 @@ io.on('connection', socket => {
 
   socket.on(ACTION_NAMES.JOIN_GAME, ({ game_id }, callback) => {
     if (!games.includes(game_id)) {
-      callback({ error: 'GAME_NOT_EXIST' })
+      callback({ error: ERRORS.GAME_NOT_EXIST })
       return
     }
 
-    console.log('> join_game: ', game_id)
     socket.join(game_id)
 
     io.in(game_id).emit(ACTION_NAMES.NEW_PLAYER, socket.user_id)

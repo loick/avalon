@@ -6,3 +6,7 @@ export const ACTION_NAMES = {
   JOIN_GAME: 'join_game',
   NEW_PLAYER: 'new_player',
 }
+
+export const ERRORS = {
+  GAME_NOT_EXIST: 'GAME_NOT_EXIST',
+}
