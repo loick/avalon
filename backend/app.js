@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4'
 import express from 'express'
-import { ACTION_NAMES, PORT } from '../mobile/config'
+import { ACTION_NAMES, ERRORS, PORT } from '../mobile/config'
 
 const app = express()
 const http = require('http').createServer(app)
@@ -25,7 +25,7 @@ io.on('connection', socket => {
 
   socket.on(ACTION_NAMES.JOIN_GAME, ({ game_id }, callback) => {
     if (!games.includes(game_id)) {
-      callback({ error: 'GAME_NOT_EXIST' })
+      callback({ error: ERRORS.GAME_NOT_EXIST })
       return
     }
 
