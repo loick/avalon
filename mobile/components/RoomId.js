@@ -8,13 +8,13 @@ const RoomId = () => {
   useEffect(() => {
     const joinRoom = async () => {
       const socket = new Socket()
-      const { game_id } = await socket.joinRoom()
+      const { game_id } = await socket.joinRoom('roomId')
       setGameId(game_id)
     }
     joinRoom()
   }, [])
 
-  return <Text>{{ gameId }}</Text>
+  return <Text>{gameId || 'no game id fetched'}</Text>
 }
 
 export default RoomId

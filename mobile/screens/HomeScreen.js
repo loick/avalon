@@ -1,14 +1,15 @@
-import * as WebBrowser from 'expo-web-browser'
 import React from 'react'
 import { Button, StyleSheet, View } from 'react-native'
+import RoomId from '../components/RoomId'
 
 const BUTTONS = ['CREATE', 'JOIN']
 
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
+      <RoomId />
       {BUTTONS.map(button => (
-        <Button title={button} />
+        <Button key={button} title={button} />
       ))}
     </View>
   )

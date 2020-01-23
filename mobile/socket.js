@@ -1,19 +1,23 @@
 import io from 'socket.io-client'
-import { SOCKET_URL, ACTION_NAMES } from './config'
+import { API_URL, ACTION_NAMES } from './config'
 
 class Socket {
   context = {
     user_id: null,
-    room_id: null,
+    game_id: null,
   }
 
   constructor() {
-    this.socket = io(`${SOCKET_URL}/`)
+    this.socket = io(API_URL)
+
+    this.socket.on('connect', () => {
+      console.log(this.socket.connected) // true
+    })
   }
 
   async newRoom() {
     return new Promise((resolve, reject) => {
-      this.socket.emit(ACTION_NAMES.NEW_ROOM, this.context, data => {
+      this.socket.emit(ACTION_NAMES.NEW_GAME, this.context, data => {
         resolve(data)
       })
     })
@@ -21,15 +25,16 @@ class Socket {
 
   async joinRoom(id) {
     return new Promise((resolve, reject) => {
-      if (this.context.room_id) {
-        resolve({ room_id: this.context.room_id })
+      if (this.context.game_id) {
+        resolve({ game_id: this.context.game_id })
       }
 
       this.socket.emit(
-        ACTION_NAMES.JOIN_ROOM,
-        { ...this.context, room_id: id },
+        ACTION_NAMES.JOIN_GAME,
+        { ...this.context, game_id: id },
         data => {
-          this.context.room_id = data.room_id
+          console.log('data', data)
+          this.context.game_id = data.game_id
           resolve(data)
         },
       )

@@ -1,8 +1,7 @@
-const BASE_URL = ''
+const BASE_URL = 'c3f6d635.ngrok.io'
 export const API_URL = `http://${BASE_URL}`
-export const SOCKET_URL = `ws://${BASE_URL}/room/`
 
 export const ACTION_NAMES = {
-  NEW_ROOM: 'new_game',
-  JOIN_ROOM: 'join_game',
+  NEW_GAME: 'new_game',
+  JOIN_GAME: 'join_game',
 }
