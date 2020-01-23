@@ -1,31 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button, Title } from 'react-native-paper'
-import { createGame } from '../socket'
-
-const createRoomButton = navigate => {
-  const [clicked, setCliked] = useState(null)
-
-  useEffect(() => {
-    const createGameFn = async () => {
-      const { game_id } = await createGame()
-
-      if (game_id) {
-        navigate('Create')
-      }
-    }
-
-    if (clicked) {
-      createGameFn()
-    }
-  }, [clicked])
-
-  return (
-    <Button mode="outlined" onPress={() => setCliked(true)}>
-      Create
-    </Button>
-  )
-}
 
 export default function Home({ navigation: { navigate } }) {
   return (
@@ -38,7 +13,13 @@ export default function Home({ navigation: { navigate } }) {
       >
         Join
       </Button>
-      {createRoomButton(navigate)}
+      <Button
+        style={styles.joinButton}
+        mode="outlined"
+        onPress={() => navigate('Create')}
+      >
+        Create
+      </Button>
     </View>
   )
 }
