@@ -25,7 +25,7 @@ io.on('connection', socket => {
     const game_id = msg.game_id
     socket.join(game_id)
 
-    io.to(game_id).emit(ACTION_NAMES.NEW_PLAYER, socket.user_id)
+    io.in(game_id).emit(ACTION_NAMES.NEW_PLAYER, socket.user_id)
 
     const response = { user_id: socket.user_id, game_id: game_id }
     console.log('< join_game: ', response)

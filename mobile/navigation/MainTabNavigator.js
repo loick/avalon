@@ -12,12 +12,7 @@ const config = Platform.select({
   default: {},
 })
 
-const HomeStack = createStackNavigator(
-  {
-    Home,
-  },
-  config,
-)
+const HomeStack = createStackNavigator({ Home }, config)
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
@@ -35,12 +30,7 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = ''
 
-const RulesStack = createStackNavigator(
-  {
-    Rules,
-  },
-  config,
-)
+const RulesStack = createStackNavigator({ Rules }, config)
 
 RulesStack.navigationOptions = {
   tabBarLabel: 'Rules',
