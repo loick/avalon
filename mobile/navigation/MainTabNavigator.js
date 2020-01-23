@@ -7,13 +7,14 @@ import TabBarIcon from '../components/TabBarIcon'
 import Home from '../screens/Home'
 import Rules from '../screens/Rules'
 import Join from '../screens/Join'
+import Create from '../screens/Create'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},
 })
 
-const HomeStack = createStackNavigator({ Home }, config)
+const HomeStack = createStackNavigator({ Home, Create, Join }, config)
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
@@ -45,17 +46,9 @@ RulesStack.navigationOptions = {
 
 RulesStack.path = ''
 
-const JoinStack = createStackNavigator(
-  {
-    Join,
-  },
-  config,
-)
-
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   RulesStack,
-  JoinStack,
 })
 
 tabNavigator.path = ''

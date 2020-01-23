@@ -11,7 +11,7 @@ const createRoomButton = navigate => {
       const { game_id } = await createGame()
 
       if (game_id) {
-        navigate('Rules')
+        navigate('Create')
       }
     }
 
