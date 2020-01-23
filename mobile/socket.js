@@ -6,7 +6,13 @@ const context = {
   game_id: null,
 }
 
-const socket = io(API_URL)
+console.log('socket init', io)
+
+const socket = io('http://localhost:3000')
+
+socket.on('connect', () => {
+  console.log(socket.id) // 'G5p5...'
+})
 
 const onJoiningGame = resolve => data => {
   context.game_id = data.game_id

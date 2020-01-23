@@ -1,6 +1,20 @@
 {
+  "scripts": {
+    "start": "node -r esm app.js",
+    "prettier": "prettier '**/*.js'",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "dependencies": {
+    "esm": "^3.2.25",
     "express": "^4.17.1",
+    "precommit": "lint-staged",
+    "prettier": "^1.19.1",
     "socket.io": "^2.3.0",
     "uuid": "^3.4.0"
   }

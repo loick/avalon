@@ -13,8 +13,7 @@ Todo
 Install expo: https://expo.io/learn
 
 ```
-cd mobile/
-expo start
+make launch // will launch mobile & server
 ```
 
 - Install the Expo app on your Android or iOS device.
