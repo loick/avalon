@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs'
 import TabBarIcon from '../components/TabBarIcon'
 import Home from '../screens/Home'
 import Rules from '../screens/Rules'
+import Join from '../screens/Join'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -44,9 +45,17 @@ RulesStack.navigationOptions = {
 
 RulesStack.path = ''
 
+const JoinStack = createStackNavigator(
+  {
+    Join,
+  },
+  config,
+)
+
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   RulesStack,
+  JoinStack,
 })
 
 tabNavigator.path = ''
