@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import Socket from '../socket'
-import { Text } from 'react-native'
+import { joinGame } from '../socket'
+import { View, Text } from 'react-native'
 
 const RoomId = () => {
   const [gameId, setGameId] = useState(null)
 
   useEffect(() => {
     const joinRoom = async () => {
-      const socket = new Socket()
-      const { game_id } = await socket.joinRoom('roomId')
+      const { game_id } = await joinGame('roomId')
       setGameId(game_id)
     }
     joinRoom()
   }, [])
 
-  return <Text>{gameId || 'no game id fetched'}</Text>
+  return (
+    <View>
+      {!gameId && <Text>Loading...</Text>}
+      {gameId && <Text>{gameId}</Text>}
+    </View>
+  )
 }
 
 export default RoomId
