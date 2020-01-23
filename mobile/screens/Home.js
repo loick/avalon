@@ -1,20 +1,24 @@
-import * as WebBrowser from 'expo-web-browser'
 import React from 'react'
 import { Button, StyleSheet, View } from 'react-native'
+import Rules from './Rules'
 
 const BUTTONS = ['CREATE', 'JOIN']
 
-export default function HomeScreen() {
+export default function Home() {
   return (
     <View style={styles.container}>
       {BUTTONS.map(button => (
-        <Button title={button} />
+        <Button
+          key={button}
+          title={button}
+          onPress={() => this.props.navigation.navigate(Rules)}
+        />
       ))}
     </View>
   )
 }
 
-HomeScreen.navigationOptions = {
+Home.navigationOptions = {
   header: null,
 }
 
