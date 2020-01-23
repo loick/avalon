@@ -1,18 +1,15 @@
 import React from 'react'
 import { Button, StyleSheet, View } from 'react-native'
-import Rules from './Rules'
+import RoomId from '../components/RoomId'
 
 const BUTTONS = ['CREATE', 'JOIN']
 
 export default function Home() {
   return (
     <View style={styles.container}>
+      <RoomId />
       {BUTTONS.map(button => (
-        <Button
-          key={button}
-          title={button}
-          onPress={() => this.props.navigation.navigate(Rules)}
-        />
+        <Button key={button} title={button} />
       ))}
     </View>
   )

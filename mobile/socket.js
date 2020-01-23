@@ -1,28 +1,31 @@
-import { SOCKET_URL, ACTION_NAMES } from './config'
+import io from 'socket.io-client'
+import { API_URL, ACTION_NAMES } from './config'
 
-class Room {
-  connected = false
-
-  constructor(roomNumber) {
-    this.ws = new WebSocket(`${SOCKET_URL}/${roomNumber}/0`)
-    this.ws.onopen = () => {
-      this.connected = true
-    }
-    this.ws.onerror = e => {
-      console.error(e.message)
-    }
-    this.ws.onmessage = e => {
-      console.error(e)
-    }
-  }
-
-  newRoom() {
-    this.ws.send(JSON.stringify({ action: ACTION_NAMES.NEW_ROOM }))
-  }
-
-  sendAction() {
-    this.ws.send(JSON.stringify({ action: ACTION_NAMES.JOIN_ROOM }))
-  }
+const context = {
+  user_id: null,
+  game_id: null,
 }
 
-export default Room
+const socket = io(API_URL)
+
+export const newGame = () => {
+  return new Promise((resolve, reject) => {
+    socket.emit(ACTION_NAMES.NEW_GAME, context, data => {
+      context.game_id = data.game_id
+      resolve(data)
+
+      // TODO: FAIL?
+    })
+  })
+}
+
+export const joinGame = id => {
+  return new Promise((resolve, reject) => {
+    socket.emit(ACTION_NAMES.JOIN_GAME, { ...context, game_id: id }, data => {
+      context.game_id = data.game_id
+      resolve(data)
+
+      // TODO: FAIL?
+    })
+  })
+}
