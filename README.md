@@ -22,7 +22,7 @@ make launch // will launch mobile & server
 
 ## TODO
 
-- User get an error if the socket is not opened
+- User get an error if the socket is not opened (✅)
 - Master creates a room (✅)
 - Slave is denied if the room number does not exist (✅)
 - Slave can join a room

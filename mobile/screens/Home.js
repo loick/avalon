@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button, Title } from 'react-native-paper'
+import { isConnected } from '../socket'
 
 export default function Home({ navigation: { navigate } }) {
+  const [gameReady, setGameReady] = useState(false)
+
+  useEffect(() => {
+    const prepareGameConnection = async () => {
+      const gameStatus = await isConnected()
+      setGameReady(gameStatus)
+    }
+
+    if (!gameReady) {
+      prepareGameConnection()
+    }
+  }, [])
+
   return (
     <View style={styles.container}>
-      <Title style={styles.title}>Avalon</Title>
+      <Title style={styles.title}>
+        Avalon ({gameReady ? 'Ready' : 'Not ready...'})
+      </Title>
       <Button
         style={styles.joinButton}
         mode="outlined"

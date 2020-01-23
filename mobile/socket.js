@@ -20,6 +20,17 @@ const onJoiningGame = resolve => data => {
 
   resolve(data)
 }
+export const sleep = time =>
+  new Promise(resolve => setTimeout(() => resolve(), time))
+
+export const isConnected = () => {
+  return new Promise(async (resolve, reject) => {
+    while (!socket.connected) {
+      await sleep(2000)
+    }
+    resolve(true)
+  })
+}
 
 export const createGame = () => {
   return new Promise((resolve, reject) => {
