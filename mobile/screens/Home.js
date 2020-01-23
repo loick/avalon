@@ -1,20 +1,34 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, StyleSheet, View } from 'react-native'
-import RoomId from '../components/RoomId'
+// import RoomId from '../components/RoomId'
+import { createGame } from '../socket'
 
-const BUTTONS = ['CREATE', 'JOIN']
+const createRoomButton = navigate => {
+  const [clicked, setCliked] = useState(null)
 
-export default function Home({ navigation }) {
+  useEffect(() => {
+    const joinRoom = async () => {
+      const { game_id } = await createGame()
+
+      if (game_id) {
+        navigate('Rules')
+      }
+    }
+
+    if (clicked) {
+      joinRoom()
+    }
+  }, [clicked])
+
+  return <Button title="Create" onPress={() => setCliked(true)} />
+}
+
+export default function Home({ navigation: { navigate } }) {
   return (
     <View style={styles.container}>
-      <RoomId />
-      {BUTTONS.map(button => (
-        <Button
-          key={button}
-          title={button}
-          onPress={() => navigation.navigate('Rules')}
-        />
-      ))}
+      {/* <RoomId /> */}
+      <Button title="Join" onPress={() => navigate('Rules')} />
+      {createRoomButton(navigate)}
     </View>
   )
 }
