@@ -38,6 +38,10 @@ export const createGame = () => {
   })
 }
 
+export const onPlayerAdded = cb => {
+  socket.on(ACTION_NAMES.NEW_PLAYER, cb)
+}
+
 export const joinGame = id => {
   return new Promise((resolve, reject) => {
     socket.emit(
