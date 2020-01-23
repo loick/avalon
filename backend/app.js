@@ -19,6 +19,8 @@ io.on('connection', socket => {
 
     const response = { user_id: socket.user_id, game_id: new_game_id }
     console.log('< new_game: ', response)
+
+    console.log(socket.rooms)
     callback(response)
   })
 
@@ -30,6 +32,7 @@ io.on('connection', socket => {
 
     socket.join(game_id)
 
+    // TODO: only send it to the master
     io.in(game_id).emit(ACTION_NAMES.NEW_PLAYER, socket.user_id)
 
     const response = { user_id: socket.user_id, game_id: game_id }
@@ -38,6 +41,8 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
+    // TODO: Remove the user from the room
+    // TODO: If the user is the master, kill the room
     console.log('User disconnected: ', socket.user_id)
   })
 })
