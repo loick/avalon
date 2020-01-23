@@ -1,4 +1,4 @@
-export const PORT = 3000
+export const PORT = 2000
 export const API_URL = `http://localhost:${PORT}`
 
 export const ACTION_NAMES = {
