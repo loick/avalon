@@ -29,8 +29,8 @@ export default function CreateGame() {
     <ScrollView style={styles.container}>
       {gameId ? (
         <Fragment>
-          <Title>Game Created: {gameId}</Title>
-          <Text>Waiting for users to join... (TODO, list of users)</Text>
+          <Text>Game Created: {gameId}</Text>
+          <Text>Waiting for users to join...</Text>
           <List.Section>
             {players.map(player => (
               <List.Item
