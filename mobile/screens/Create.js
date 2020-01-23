@@ -30,7 +30,7 @@ export default function CreateGame() {
       {gameId ? (
         <Fragment>
           <Text>Game Created: {gameId}</Text>
-          <Text>Waiting for users to join... (TODO, list of users)</Text>
+          <Text>Waiting for users to join...</Text>
           {players.map(player => (
             <List.Item
               title={player}
