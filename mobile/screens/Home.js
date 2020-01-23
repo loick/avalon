@@ -4,12 +4,16 @@ import RoomId from '../components/RoomId'
 
 const BUTTONS = ['CREATE', 'JOIN']
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <RoomId />
       {BUTTONS.map(button => (
-        <Button key={button} title={button} />
+        <Button
+          key={button}
+          title={button}
+          onPress={() => navigation.navigate('Rules')}
+        />
       ))}
     </View>
   )
