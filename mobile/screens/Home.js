@@ -27,7 +27,7 @@ export default function Home({ navigation: { navigate } }) {
   return (
     <View style={styles.container}>
       {/* <RoomId /> */}
-      <Button title="Join" onPress={() => navigate('Rules')} />
+      <Button title="Join" onPress={() => navigate('Join')} />
       {createRoomButton(navigate)}
     </View>
   )
