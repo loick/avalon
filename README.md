@@ -10,8 +10,11 @@ Todo
 
 ## Local
 
+Install expo: https://expo.io/learn
+
 ```
-npm run start
+cd mobile/
+expo start
 ```
 
 - Install the Expo app on your Android or iOS device.
