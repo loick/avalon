@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { createGame, onPlayerAdded } from '../socket'
-import { ScrollView, StyleSheet, Text } from 'react-native'
+import { ScrollView, StyleSheet, Title, Text } from 'react-native'
 import { List } from 'react-native-paper'
 
 export default function CreateGame() {
@@ -29,14 +29,16 @@ export default function CreateGame() {
     <ScrollView style={styles.container}>
       {gameId ? (
         <Fragment>
-          <Text>Game Created: {gameId}</Text>
+          <Title>Game Created: {gameId}</Title>
           <Text>Waiting for users to join... (TODO, list of users)</Text>
-          {players.map(player => (
-            <List.Item
-              title={player}
-              left={props => <List.Icon {...props} icon="folder" />}
-            />
-          ))}
+          <List.Section>
+            {players.map(player => (
+              <List.Item
+                title={player}
+                left={props => <List.Icon {...props} icon="folder" />}
+              />
+            ))}
+          </List.Section>
         </Fragment>
       ) : (
         <Text>Creating the game room...</Text>
