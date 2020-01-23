@@ -1,6 +1,7 @@
 import uuid from 'uuid/v4'
 import express from 'express'
 import { ACTION_NAMES, PORT } from '../mobile/config'
+
 const app = express()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)

@@ -6,9 +6,7 @@ const context = {
   game_id: null,
 }
 
-console.log('socket init', io)
-
-const socket = io('http://localhost:3000')
+const socket = io(API_URL)
 
 socket.on('connect', () => {
   console.log(socket.id) // 'G5p5...'
