@@ -11,6 +11,9 @@ class Room {
     this.ws.onerror = e => {
       console.error(e.message)
     }
+    this.ws.onmessage = e => {
+      console.error(e)
+    }
   }
 
   newRoom() {
