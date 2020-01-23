@@ -1,7 +1,7 @@
 import React from 'react'
 import { ScrollView, StyleSheet, Text } from 'react-native'
 
-export default function RulesScreen() {
+export default function Rules() {
   return (
     <ScrollView style={styles.container}>
       <Text>List of the rules</Text>
@@ -10,7 +10,7 @@ export default function RulesScreen() {
   )
 }
 
-RulesScreen.navigationOptions = {
+Rules.navigationOptions = {
   title: 'Rules of the game',
 }
 

@@ -4,8 +4,8 @@ import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 
 import TabBarIcon from '../components/TabBarIcon'
-import HomeScreen from '../screens/HomeScreen'
-import RulesScreen from '../screens/RulesScreen'
+import Home from '../screens/Home'
+import Rules from '../screens/Rules'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -14,7 +14,7 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen,
+    Home,
   },
   config,
 )
@@ -37,7 +37,7 @@ HomeStack.path = ''
 
 const RulesStack = createStackNavigator(
   {
-    Rules: RulesScreen,
+    Rules,
   },
   config,
 )

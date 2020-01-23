@@ -3,14 +3,16 @@ import { Button, StyleSheet, View } from 'react-native'
 // import RoomId from '../components/RoomId'
 import { createGame } from '../socket'
 
-const BUTTONS = [{ name: 'JOIN', path: '' }]
-
-const createRoomButton = () => {
+const createRoomButton = navigate => {
   const [clicked, setCliked] = useState(null)
 
   useEffect(() => {
     const joinRoom = async () => {
-      const { game_id, user_id } = await createGame()
+      const { game_id } = await createGame()
+
+      if (game_id) {
+        navigate('Rules')
+      }
     }
 
     if (clicked) {
@@ -21,25 +23,17 @@ const createRoomButton = () => {
   return <Button title="Create" onPress={() => setCliked(true)} />
 }
 
-export default function HomeScreen() {
+export default function Home({ navigation: { navigate } }) {
   return (
     <View style={styles.container}>
       {/* <RoomId /> */}
-      {BUTTONS.map(button => (
-        <Button
-          key={button.name}
-          title={button.name}
-          onPress={() => {
-            alert('You tapped the button!')
-          }}
-        />
-      ))}
-      {createRoomButton()}
+      <Button title="Join" onPress={() => navigate('Rules')} />
+      {createRoomButton(navigate)}
     </View>
   )
 }
 
-HomeScreen.navigationOptions = {
+Home.navigationOptions = {
   header: null,
 }
 
