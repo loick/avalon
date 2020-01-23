@@ -10,8 +10,8 @@ export default function RulesScreen() {
   )
 }
 
-LinksScreen.navigationOptions = {
-  title: 'Links',
+RulesScreen.navigationOptions = {
+  title: 'Rules of the game',
 }
 
 const styles = StyleSheet.create({
