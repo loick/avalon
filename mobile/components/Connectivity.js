@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { StyleSheet } from 'react-native'
-import { Title } from 'react-native-paper'
+import { Snackbar } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { setSocketReady } from '../redux/game'
 import { isConnected } from '../socket'
@@ -18,7 +18,9 @@ const Connectivity = ({ dispatch, socketReady }) => {
   }, [socketReady])
 
   return (
-    !socketReady && <Title style={styles.title}>(Socket not ready...)</Title>
+    <Snackbar duration={10000} visible={!socketReady}>
+      Waiting for server...
+    </Snackbar>
   )
 }
 

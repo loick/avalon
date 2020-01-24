@@ -28,8 +28,8 @@ const App = ({ skipLoadingScreen }) => {
       <Provider store={store}>
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <Connectivity />
           <AppNavigator />
+          <Connectivity />
         </View>
       </Provider>
     )
