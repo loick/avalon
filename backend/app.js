@@ -38,7 +38,7 @@ io.on('connection', socket => {
 
     callback({
       player: socket.user.toObject(),
-      game: game.gameDetails(socket.id),
+      game: game.toObject(socket.id),
     })
   })
 
@@ -57,7 +57,7 @@ io.on('connection', socket => {
     console.log('< join_game: ', socket.user.toObject())
     callback({
       player: socket.user.toObject(),
-      game: game.gameDetails(socket.id),
+      game: game.toObject(socket.id),
     })
   })
 

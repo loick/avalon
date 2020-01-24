@@ -13,6 +13,7 @@ class Game {
     this.invite_code = generateInviteCode()
     this.game_master_id = null
     this.roles = []
+    this.game_started = false
   }
 
   setGameMaster(id) {
@@ -27,10 +28,15 @@ class Game {
     this.invite_code = code
   }
 
-  gameDetails(socketId) {
+  startGamn() {
+    this.game_started = true
+  }
+
+  toObject(socketId) {
     return {
       id: this.id,
       invite_code: this.invite_code,
+      game_started: this.game_started,
       is_game_master: this.isGameMaster(socketId),
       roles: this.roles,
     }
