@@ -1,6 +1,7 @@
 import uuid from 'uuid/v4'
 import express from 'express'
 import { ACTION_NAMES, ERRORS, PORT } from '../mobile/config'
+import { getPlayerSummary, getPlayersOnGame } from './player'
 
 const app = express()
 const http = require('http').createServer(app)
@@ -14,28 +15,6 @@ function generateInviteCode() {
     .substr(2)
     .toUpperCase()
     .substring(0, 4)
-}
-
-const getPlayerSummary = socket => ({
-  user_id: socket.user_id,
-  user_name: socket.user_name,
-  game_id: socket.game_id,
-  game_invite_code: socket.game_invite_code,
-  is_game_master: socket.is_game_master,
-})
-
-const getPlayersOnGame = game_id => {
-  if (io.sockets.adapter.rooms[game_id]) {
-    const clients = io.sockets.adapter.rooms[game_id].sockets
-
-    return Object.entries(clients)
-      .filter(([client, connected]) => connected)
-      .map(([client]) => {
-        return getPlayerSummary(io.sockets.connected[client])
-      })
-  }
-
-  return []
 }
 
 io.on('connection', socket => {
@@ -85,7 +64,7 @@ io.on('connection', socket => {
     socket.game_invite_code = invite_code
     socket.is_game_master = false
 
-    console.log(getPlayersOnGame(socket.game_id))
+    console.log(getPlayersOnGame(io.sockets, socket.game_id))
     // TOOD: broadcast the player list. That way all new players would know all the players in the room.
     io.in(game_id).emit(ACTION_NAMES.NEW_PLAYER, socket.user_id)
 
