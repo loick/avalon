@@ -46,6 +46,9 @@ io.on('connection', socket => {
     socket.game_invite_code = new_invite_code
     socket.is_game_master = true
 
+    const playerList = getPlayersOnGame(io.sockets, socket.game_id)
+    io.in(new_game_id).emit(ACTION_NAMES.PLAYER_LIST, playerList)
+
     const response = getPlayerSummary(socket)
     console.log('< new_game: ', response)
 
@@ -64,9 +67,8 @@ io.on('connection', socket => {
     socket.game_invite_code = invite_code
     socket.is_game_master = false
 
-    console.log(getPlayersOnGame(io.sockets, socket.game_id))
-    // TOOD: broadcast the player list. That way all new players would know all the players in the room.
-    io.in(game_id).emit(ACTION_NAMES.NEW_PLAYER, socket.user_id)
+    const playerList = getPlayersOnGame(io.sockets, socket.game_id)
+    io.in(game_id).emit(ACTION_NAMES.PLAYER_LIST, playerList)
 
     const response = getPlayerSummary(socket)
     console.log('< join_game: ', response)

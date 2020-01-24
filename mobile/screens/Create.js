@@ -5,7 +5,7 @@ import { List, Title, ActivityIndicator } from 'react-native-paper'
 
 export default function CreateGame() {
   const [gameId, setGameId] = useState(null)
-  const [players, addNewPlayer] = useState([])
+  const [players, updatePlayerList] = useState([])
 
   useEffect(() => {
     const createGameFn = async () => {
@@ -22,7 +22,10 @@ export default function CreateGame() {
   }, [])
 
   useEffect(() => {
-    onPlayerAdded(addNewPlayer)
+    onPlayerAdded(p => {
+      console.log('received', p)
+      updatePlayerList(p)
+    })
   }, [])
 
   return (
@@ -30,11 +33,13 @@ export default function CreateGame() {
       {gameId ? (
         <View>
           <Title>Game Created: {gameId}</Title>
-          <Text>Waiting for users to join...</Text>
+          {players.length === 0 && <Text>Waiting for users to join...</Text>}
           <List.Section>
             {players.map(player => (
               <List.Item
-                title={player}
+                key={player.user_id}
+                title={player.user_name}
+                description={player.is_game_master && 'GAME MASTER'}
                 left={props => <List.Icon {...props} icon="folder" />}
               />
             ))}
