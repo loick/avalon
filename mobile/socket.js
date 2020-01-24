@@ -32,6 +32,13 @@ export const isConnected = () => {
   })
 }
 
+export const registerUsername = name => {
+  return new Promise((resolve, reject) => {
+    console.log('here')
+    socket.emit(ACTION_NAMES.PLAYER_NAME, { ...context, name }, resolve)
+  })
+}
+
 export const createGame = () => {
   return new Promise((resolve, reject) => {
     socket.emit(ACTION_NAMES.NEW_GAME, context, onJoiningGame(resolve))

@@ -8,18 +8,16 @@ const io = require('socket.io')(http)
 
 const games = []
 
-function getPlayerSummary(socket) {
-  return {
-      user_id: socket.user_id,
-      user_name: socket.user_name,
-      game_id: socket.game_id,
-      is_game_master: socket.is_game_master,
-    }
-}
+const getPlayerSummary = socket => ({
+  user_id: socket.user_id,
+  user_name: socket.user_name,
+  game_id: socket.game_id,
+  is_game_master: socket.is_game_master,
+})
 
 io.on('connection', socket => {
   socket.user_id = uuid()
-  socket.user_name = ""
+  socket.user_name = ''
   socket.game_id = null
   socket.is_game_master = false
   console.log('User connected: ', socket.user_id)

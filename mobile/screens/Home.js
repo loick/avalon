@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Button, Title } from 'react-native-paper'
-import { isConnected } from '../socket'
+import { Button, Title, Text, TextInput } from 'react-native-paper'
+import { isConnected, registerUsername } from '../socket'
 
 export default function Home({ navigation: { navigate } }) {
   const [gameReady, setGameReady] = useState(false)
+  const [username, setUsername] = useState('')
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
     const prepareGameConnection = async () => {
@@ -17,15 +19,48 @@ export default function Home({ navigation: { navigate } }) {
     }
   }, [])
 
+  useEffect(() => {
+    const setUsername = async () => {
+      await registerUsername(username)
+    }
+
+    console.log('here', formSubmitted)
+
+    if (formSubmitted) {
+      setUsername()
+    }
+  }, [formSubmitted])
+
+  const areButtonsDisabled = !gameReady || !formSubmitted
+
   return (
     <View style={styles.container}>
       <Title style={styles.title}>
-        Avalon {!gameReady && '(Socket ready...)'}
+        Avalon
+        {!gameReady && ' (Socket not ready...)'}
       </Title>
+      {formSubmitted && <Text>{`(${username})`.toUpperCase()}</Text>}
+      {gameReady && !formSubmitted && (
+        <Fragment>
+          <TextInput
+            style={styles.input}
+            label="Username"
+            value={username}
+            onChangeText={setUsername}
+          />
+          <Button
+            style={styles.joinButton}
+            mode="outlined"
+            onPress={() => setFormSubmitted(true)}
+          >
+            Validate
+          </Button>
+        </Fragment>
+      )}
       <Button
         style={styles.joinButton}
         mode="outlined"
-        disabled={!gameReady}
+        disabled={areButtonsDisabled}
         onPress={() => navigate('Join')}
       >
         Join
@@ -33,7 +68,7 @@ export default function Home({ navigation: { navigate } }) {
       <Button
         style={styles.joinButton}
         mode="outlined"
-        disabled={!gameReady}
+        disabled={areButtonsDisabled}
         onPress={() => navigate('Create')}
       >
         Create
@@ -58,5 +93,11 @@ const styles = StyleSheet.create({
   },
   joinButton: {
     marginBottom: 20,
+  },
+  input: {
+    width: 200,
+    marginBottom: 18,
+    backgroundColor: 'transparent',
+    textAlign: 'center',
   },
 })
