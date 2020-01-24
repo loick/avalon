@@ -33,7 +33,7 @@ export default function Join({ navigation: { navigate } }) {
         label="Room id"
         value={value}
         maxLength={4}
-        onChangeText={onChangeText}
+        onChangeText={v => onChangeText(v.toUpperCase())}
       />
       <Button mode="outlined" onPress={() => onValid(true)}>
         Join

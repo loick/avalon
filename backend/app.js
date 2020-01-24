@@ -85,7 +85,7 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
-    console.log('User disconnected: ', socket.user_id)
+    console.log('User disconnected: ', socket.user.id)
     if (socket.game) {
       if (socket.game.isGameMaster(socket.user.id)) {
         // TODO: If the user is the master, kill the room
