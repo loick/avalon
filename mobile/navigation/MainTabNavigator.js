@@ -79,6 +79,7 @@ const recapProps = {
     { id: 5 },
   ],
   attempts: 2,
+  builder: 'Trap',
 }
 const RecapStack = createStackNavigator(
   { Recap: () => <Recap {...recapProps} /> },
