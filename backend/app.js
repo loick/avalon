@@ -50,7 +50,7 @@ io.on('connection', socket => {
     socket.game_id = game_id
     socket.is_game_master = false
 
-    // TODO: only send it to the master
+    // TOOD: broadcast the player list. That way all new players would know all the players in the room.
     io.in(game_id).emit(ACTION_NAMES.NEW_PLAYER, socket.user_id)
 
     const response = getPlayerSummary(socket)
@@ -59,7 +59,9 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
-    // TODO: If the user is the master, kill the room
+    if (socket.is_game_master) {
+      // TODO: If the user is the master, kill the room
+    }
     console.log('User disconnected: ', socket.user_id)
   })
 })
