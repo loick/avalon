@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { createGame, onPlayerAdded } from '../socket'
+import { createGame, onPlayerAdded, setGameReady } from '../socket'
 import { ScrollView, View, StyleSheet, Text } from 'react-native'
 import { List, Title, ActivityIndicator, Button } from 'react-native-paper'
 import { connect } from 'react-redux'
@@ -26,6 +26,11 @@ const CreateGame = ({ dispatch, gameId }) => {
   useEffect(() => {
     onPlayerAdded(updatePlayerList)
   }, [])
+
+  const onGameStart = async () => {
+    await setGameReady()
+    // TODO: Navigate?
+  }
 
   const isTeamValid =
     players.length >= NB_MIN_PLAYERS && players.length <= NB_MAX_PLAYERS
@@ -54,7 +59,7 @@ const CreateGame = ({ dispatch, gameId }) => {
               />
             ))}
           </List.Section>
-          <Button disabled={!isTeamValid} mode="outlined">
+          <Button disabled={!isTeamValid} mode="outlined" onPress={onGameStart}>
             Go with this team
           </Button>
         </View>

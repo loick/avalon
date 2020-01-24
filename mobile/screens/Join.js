@@ -46,19 +46,23 @@ export default function Join({ navigation: { navigate } }) {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        label="Room id"
-        value={value}
-        maxLength={4}
-        onChangeText={onInputChange}
-      />
-      <Button
-        mode="outlined"
-        onPress={() => onPageStateChange(JOINING_STATE.INPUT)}
-      >
-        Join
-      </Button>
+      {!isJoiningWaitingForGameToSTart && (
+        <View>
+          <TextInput
+            style={styles.input}
+            label="Room id"
+            value={value}
+            maxLength={4}
+            onChangeText={onInputChange}
+          />
+          <Button
+            mode="outlined"
+            onPress={() => onPageStateChange(JOINING_STATE.INPUT)}
+          >
+            Join
+          </Button>
+        </View>
+      )}
       {isJoiningTheRoom && (
         <View>
           <Text>Joining the room...</Text>

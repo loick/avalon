@@ -33,6 +33,12 @@ export const registerUsername = name => {
   })
 }
 
+export const setGameReady = () => {
+  return new Promise((resolve, reject) => {
+    socket.emit(ACTION_NAMES.START_ROLE_SETUP, context, resolve)
+  })
+}
+
 export const createGame = () => {
   return new Promise((resolve, reject) => {
     socket.emit(ACTION_NAMES.NEW_GAME, context, onJoiningGame(resolve))
