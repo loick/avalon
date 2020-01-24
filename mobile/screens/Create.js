@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { createGame, onPlayerAdded } from '../socket'
-import { ScrollView, View, StyleSheet, Title, Text } from 'react-native'
-import { List, ActivityIndicator } from 'react-native-paper'
+import { ScrollView, View, StyleSheet, Text } from 'react-native'
+import { List, Title, ActivityIndicator } from 'react-native-paper'
 
 export default function CreateGame() {
   const [gameId, setGameId] = useState(null)
@@ -25,26 +25,28 @@ export default function CreateGame() {
     onPlayerAdded(addNewPlayer)
   }, [])
 
-  return gameId ? (
+  return (
     <ScrollView style={styles.container}>
-      <View>
-        <Title>Game Created: {gameId}</Title>
-        <Text>Waiting for users to join...</Text>
-        <List.Section>
-          {players.map(player => (
-            <List.Item
-              title={player}
-              left={props => <List.Icon {...props} icon="folder" />}
-            />
-          ))}
-        </List.Section>
-      </View>
+      {gameId ? (
+        <View>
+          <Title>Game Created: {gameId}</Title>
+          <Text>Waiting for users to join...</Text>
+          <List.Section>
+            {players.map(player => (
+              <List.Item
+                title={player}
+                left={props => <List.Icon {...props} icon="folder" />}
+              />
+            ))}
+          </List.Section>
+        </View>
+      ) : (
+        <View style={styles.containerCreating}>
+          <Text style={styles.loadingLabel}>Creating the game room...</Text>
+          <ActivityIndicator activity={!gameId} />
+        </View>
+      )}
     </ScrollView>
-  ) : (
-    <View style={styles.containerCreating}>
-      <Text style={styles.loadingLabel}>Creating the game room...</Text>
-      <ActivityIndicator activity={!gameId} />
-    </View>
   )
 }
 
