@@ -6,7 +6,20 @@ const context = {
   game_invite_code: null,
 }
 
-const socket = io(API_URL)
+const socket = io(API_URL, {
+  timeout: 10000,
+  jsonp: false,
+  transports: ['websocket'],
+  autoConnect: false,
+  agent: '-',
+  path: '/', // Whatever your path is
+  pfx: '-',
+  cert: '-',
+  ca: '-',
+  ciphers: '-',
+  rejectUnauthorized: '-',
+  perMessageDeflate: '-',
+})
 
 const onJoiningGame = resolve => data => {
   context.game_invite_code = data.game_invite_code
