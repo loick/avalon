@@ -10,9 +10,8 @@ const socket = io(API_URL, {
   timeout: 10000,
   jsonp: false,
   transports: ['websocket'],
-  autoConnect: false,
+  autoConnect: true,
   agent: '-',
-  path: '/', // Whatever your path is
   pfx: '-',
   cert: '-',
   ca: '-',
