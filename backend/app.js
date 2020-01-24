@@ -77,10 +77,9 @@ io.on('connection', socket => {
     }
 
     const roles = AVAILABLE_ROLES_PER_NB_PLAYERS[playerList.length]
+    roles.sort(() => 0.5 - Math.random())
+
     playerList.forEach(player => {
-      roles.sort(function() {
-        return 0.5 - Math.random()
-      })
       player.role = roles.pop()
       const response = getPlayerSummary(player)
       console.log('< receive_role: ', response)
