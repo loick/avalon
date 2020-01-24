@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { createGame, onPlayerAdded } from '../socket'
-import { ScrollView, StyleSheet, Title, Text } from 'react-native'
-import { List } from 'react-native-paper'
+import { ScrollView, View, StyleSheet, Title, Text } from 'react-native'
+import { List, ActivityIndicator } from 'react-native-paper'
 
 export default function CreateGame() {
   const [gameId, setGameId] = useState(null)
@@ -29,7 +29,7 @@ export default function CreateGame() {
     <ScrollView style={styles.container}>
       {gameId ? (
         <Fragment>
-          <Text>Game Created: {gameId}</Text>
+          <Title>Game Created: {gameId}</Title>
           <Text>Waiting for users to join...</Text>
           <List.Section>
             {players.map(player => (
@@ -41,7 +41,10 @@ export default function CreateGame() {
           </List.Section>
         </Fragment>
       ) : (
-        <Text>Creating the game room...</Text>
+        <View>
+          <Text>Creating the game room...</Text>
+          <ActivityIndicator activity={!gameId} />
+        </View>
       )}
     </ScrollView>
   )
@@ -56,5 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
