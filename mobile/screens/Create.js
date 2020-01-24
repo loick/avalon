@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#fff',
-    justifyContent: 'center',
   },
   containerCreating: {
     flex: 1,
