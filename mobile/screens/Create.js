@@ -28,7 +28,7 @@ export default function CreateGame() {
   }, [])
 
   const isTeamValid =
-    players.length > NB_MIN_PLAYERS && players.length < NB_MAX_PLAYERS
+    players.length >= NB_MIN_PLAYERS && players.length <= NB_MAX_PLAYERS
 
   return (
     <ScrollView style={styles.container}>
