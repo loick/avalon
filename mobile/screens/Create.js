@@ -9,10 +9,10 @@ export default function CreateGame() {
 
   useEffect(() => {
     const createGameFn = async () => {
-      const { game_id } = await createGame()
+      const { game_invite_code } = await createGame()
 
-      if (game_id) {
-        setGameId(game_id)
+      if (game_invite_code) {
+        setGameId(game_invite_code)
       }
     }
 

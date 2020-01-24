@@ -9,7 +9,11 @@ const io = require('socket.io')(http)
 const games = {}
 
 function generateInviteCode() {
-    return Math.random().toString(36).substr(2).toUpperCase().substring(0, 4)
+  return Math.random()
+    .toString(36)
+    .substr(2)
+    .toUpperCase()
+    .substring(0, 4)
 }
 
 const getPlayerSummary = socket => ({
@@ -49,7 +53,7 @@ io.on('connection', socket => {
     callback(response)
   })
 
-  socket.on(ACTION_NAMES.NEW_GAME, (_) => {
+  socket.on(ACTION_NAMES.NEW_GAME, (_, callback) => {
     const new_game_id = uuid()
 
     let new_invite_code
@@ -69,7 +73,7 @@ io.on('connection', socket => {
     callback(response)
   })
 
-  socket.on(ACTION_NAMES.JOIN_GAME, ({ invite_code }) => {
+  socket.on(ACTION_NAMES.JOIN_GAME, ({ invite_code }, callback) => {
     if (!(invite_code in games)) {
       callback({ error: ERRORS.GAME_NOT_EXIST })
       return

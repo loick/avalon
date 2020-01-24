@@ -9,13 +9,13 @@ export default function Join({ navigation: { navigate } }) {
 
   useEffect(() => {
     const joinRoom = async () => {
-      const { game_id, error } = await joinGame(value)
+      const { game_invite_code, error } = await joinGame(value)
       if (error) {
         onValid(false)
         console.log(error)
       }
 
-      if (game_id) {
+      if (game_invite_code) {
         console.log('ready, go to loading screen')
       }
     }
