@@ -22,12 +22,15 @@ make launch // will launch mobile & server
 
 ## TODO
 
+- User provides a username (✅)
+- User is flagged as master or slave (✅)
 - User get an error if the socket is not opened (✅)
 - Master creates a room (✅)
 - Slave is denied if the room number does not exist (✅)
 - Slave can join a room
 - Slave gets a loading state
 - Master receives the infos of the new players (✅, but to check...)
+- Master receives the infos of the disconnected players
 - Master can validate the room to go to the game settings
 - Get a list of the roles to add
 - Setup the config of the game

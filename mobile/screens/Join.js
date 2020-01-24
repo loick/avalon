@@ -19,8 +19,10 @@ export default function Join({ navigation: { navigate } }) {
         console.log('ready, go to loading screen')
       }
     }
-    if (value && valid) {
+    if (value && !valid) {
       joinRoom()
+    } else {
+      onValid(false)
     }
   }, [valid])
 
