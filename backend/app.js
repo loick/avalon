@@ -62,6 +62,7 @@ io.on('connection', socket => {
   })
 
   socket.on(ACTION_NAMES.START_ROLE_SETUP, (_, callback) => {
+    console.log('< start role setup: ')
     if (!socket.game.isGameMaster(socket.user.id)) {
       callback({ error: ERRORS.USER_IS_NOT_GAME_MASTER })
       return

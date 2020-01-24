@@ -4,10 +4,11 @@ import { ScrollView, View, StyleSheet, Text } from 'react-native'
 import { List, Title, ActivityIndicator, Button } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { setGameId } from '../redux/game'
-import { NB_MIN_PLAYERS, NB_MAX_PLAYERS } from '../config'
+// import { NB_MIN_PLAYERS, NB_MAX_PLAYERS } from '../config'
 
 const CreateGame = ({ dispatch, gameId }) => {
   const [players, updatePlayerList] = useState([])
+  const [isGameReady, setReadyToStart] = useState(false)
 
   useEffect(() => {
     const createGameFn = async () => {
@@ -27,13 +28,22 @@ const CreateGame = ({ dispatch, gameId }) => {
     onPlayerAdded(updatePlayerList)
   }, [])
 
-  const onGameStart = async () => {
-    await setGameReady()
-    // TODO: Navigate?
-  }
+  useEffect(() => {
+    const validateGameSettings = async () => {
+      await setGameReady()
 
-  const isTeamValid =
-    players.length >= NB_MIN_PLAYERS && players.length <= NB_MAX_PLAYERS
+      // if (game.invite_code) {
+      //   dispatch(setGameId(game.invite_code))
+      // }
+    }
+
+    if (!isGameReady) {
+      validateGameSettings()
+    }
+  }, [isGameReady])
+
+  const isTeamValid = true
+  // players.length >= NB_MIN_PLAYERS && players.length <= NB_MAX_PLAYERS
 
   return (
     <ScrollView style={styles.container}>
@@ -59,7 +69,11 @@ const CreateGame = ({ dispatch, gameId }) => {
               />
             ))}
           </List.Section>
-          <Button disabled={!isTeamValid} mode="outlined" onPress={onGameStart}>
+          <Button
+            disabled={!isTeamValid}
+            mode="outlined"
+            onPress={() => setReadyToStart(true)}
+          >
             Go with this team
           </Button>
         </View>
