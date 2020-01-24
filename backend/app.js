@@ -12,19 +12,17 @@ function generateInviteCode() {
     return Math.random().toString(36).substr(2).toUpperCase().substring(0, 4)
 }
 
-function getPlayerSummary(socket) {
-  return {
-      user_id: socket.user_id,
-      user_name: socket.user_name,
-      game_id: socket.game_id,
-      game_invite_code: socket.game_invite_code,
-      is_game_master: socket.is_game_master,
-    }
-}
+const getPlayerSummary = socket => ({
+  user_id: socket.user_id,
+  user_name: socket.user_name,
+  game_id: socket.game_id,
+  game_invite_code: socket.game_invite_code,
+  is_game_master: socket.is_game_master,
+})
 
 io.on('connection', socket => {
   socket.user_id = uuid()
-  socket.user_name = ""
+  socket.user_name = ''
   socket.game_id = null
   socket.game_invite_code = null
   socket.is_game_master = false
@@ -54,7 +52,6 @@ io.on('connection', socket => {
     const response = getPlayerSummary(socket)
     console.log('< new_game: ', response)
 
-    console.log(socket.rooms)
     callback(response)
   })
 
@@ -70,7 +67,7 @@ io.on('connection', socket => {
     socket.game_invite_code = invite_code
     socket.is_game_master = false
 
-    // TODO: only send it to the master
+    // TOOD: broadcast the player list. That way all new players would know all the players in the room.
     io.in(game_id).emit(ACTION_NAMES.NEW_PLAYER, socket.user_id)
 
     const response = getPlayerSummary(socket)
@@ -79,9 +76,9 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
-    socket.leave(socket.game_id)
-    // TODO: If the user is the master, kill the room
-    // TODO: Remove game from global games array
+    if (socket.is_game_master) {
+      // TODO: If the user is the master, kill the room
+    }
     console.log('User disconnected: ', socket.user_id)
   })
 })

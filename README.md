@@ -22,6 +22,8 @@ make launch // will launch mobile & server
 
 ## TODO
 
+- User provides a username (✅)
+- User is flagged as master or slave (✅)
 - User get an error if the socket is not opened (✅)
 - Master creates a room (✅)
 - Slave is denied if the room number does not exist (✅)
