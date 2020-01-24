@@ -37,7 +37,6 @@ export default function Home({ navigation: { navigate } }) {
         Avalon
         {!gameReady && ' (Socket not ready...)'}
       </Title>
-      {formSubmitted && <Text>{`(${username})`.toUpperCase()}</Text>}
       {gameReady && !formSubmitted && (
         <Fragment>
           <TextInput
