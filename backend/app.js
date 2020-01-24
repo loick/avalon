@@ -13,6 +13,20 @@ const getPlayerSummary = socket => ({
   is_game_master: socket.is_game_master,
 })
 
+const getPlayersOnGame = game_id => {
+  if (io.sockets.adapter.rooms[game_id]) {
+    const clients = io.sockets.adapter.rooms[game_id].sockets
+
+    return Object.entries(clients)
+      .filter(([client, connected]) => connected)
+      .map(([client]) => {
+        return getPlayerSummary(io.sockets.connected[client])
+      })
+  }
+
+  return []
+}
+
 io.on('connection', socket => {
   socket.user_id = uuid()
   socket.user_name = ''
@@ -50,6 +64,7 @@ io.on('connection', socket => {
     socket.game_id = game_id
     socket.is_game_master = false
 
+    console.log(getPlayersOnGame(socket.game_id))
     // TOOD: broadcast the player list. That way all new players would know all the players in the room.
     io.in(game_id).emit(ACTION_NAMES.NEW_PLAYER, socket.user_id)
 
