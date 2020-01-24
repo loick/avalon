@@ -19,6 +19,10 @@ class Game {
     this.game_master_id = id
   }
 
+  isGameMaster(id) {
+    return this.game_master_id === id
+  }
+
   setInviteCode(code) {
     this.invite_code = code
   }
@@ -27,7 +31,7 @@ class Game {
     return {
       id: this.id,
       invite_code: this.invite_code,
-      is_game_master: this.game_master_id === socketId,
+      is_game_master: this.isGameMaster(socketId),
       roles: this.roles,
     }
   }

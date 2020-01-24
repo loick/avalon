@@ -1,9 +1,9 @@
-import uuid from 'uuid/v4'
 import express from 'express'
 import { ACTION_NAMES, ERRORS, PORT } from '../mobile/config'
-import { getPlayerSummary, getPlayersOnGame, MIN_NB_PLAYERS } from './player'
+import { getPlayersOnGame, MIN_NB_PLAYERS } from './player'
 import { AVAILABLE_ROLES_PER_NB_PLAYERS } from './roles'
 import Game from './class/Game'
+import Player from './class/Player'
 
 const app = express()
 const http = require('http').createServer(app)
@@ -12,18 +12,15 @@ const io = require('socket.io')(http)
 const games = {}
 
 io.on('connection', socket => {
-  socket.user_id = uuid()
-  socket.user_name = ''
-  socket.is_game_master = false
-  socket.role = null
-  console.log('User connected: ', socket.user_id)
+  const user = new Player()
+  socket.user = user
+  console.log('User connected: ', user.toObject())
 
   socket.on(ACTION_NAMES.PLAYER_NAME, ({ name }, callback) => {
-    socket.user_name = name
-    const player = getPlayerSummary(socket)
-    console.log('< player_name: ', player)
+    socket.user.setUsername(name)
+    console.log('< player_name: ', socket.user.toObject())
 
-    callback({ player })
+    callback({ player: socket.user.toObject() })
   })
 
   socket.on(ACTION_NAMES.NEW_GAME, (_, callback) => {
@@ -37,11 +34,10 @@ io.on('connection', socket => {
     const playerList = getPlayersOnGame(io.sockets, game.id)
     io.in(game.id).emit(ACTION_NAMES.PLAYER_LIST, playerList)
 
-    const player = getPlayerSummary(socket)
-    console.log('< new_game: ', player)
+    console.log('< new_game: ', socket.user.toObject())
 
     callback({
-      player,
+      player: socket.user.toObject(),
       game: game.gameDetails(socket.id),
     })
   })
@@ -58,13 +54,15 @@ io.on('connection', socket => {
     const playerList = getPlayersOnGame(io.sockets, game.id)
     io.in(game.id).emit(ACTION_NAMES.PLAYER_LIST, playerList)
 
-    const player = getPlayerSummary(socket)
-    console.log('< join_game: ', player)
-    callback({ player, game: game.gameDetails(socket.id) })
+    console.log('< join_game: ', socket.user.toObject())
+    callback({
+      player: socket.user.toObject(),
+      game: game.gameDetails(socket.id),
+    })
   })
 
   socket.on(ACTION_NAMES.START_ROLE_SETUP, (_, callback) => {
-    if (!socket.is_game_master) {
+    if (!socket.game.isGameMaster(socket.user.id)) {
       callback({ error: ERRORS.USER_IS_NOT_GAME_MASTER })
       return
     }
@@ -81,19 +79,18 @@ io.on('connection', socket => {
 
     playerList.forEach(player => {
       player.role = roles.pop()
-      const response = getPlayerSummary(player)
-      console.log('< receive_role: ', response)
-      player.emit(ACTION_NAMES.RECEIVE_ROLE, response)
+      console.log('< receive_role: ', player.user.toObject())
+      player.emit(ACTION_NAMES.RECEIVE_ROLE, player.user.toObject())
     })
   })
 
   socket.on('disconnect', () => {
     console.log('User disconnected: ', socket.user_id)
-    if (socket.is_game_master) {
-      // TODO: If the user is the master, kill the room
-    }
-
     if (socket.game) {
+      if (socket.game.isGameMaster(socket.user.id)) {
+        // TODO: If the user is the master, kill the room
+      }
+
       const playerList = getPlayersOnGame(io.sockets, socket.game.id)
       io.in(socket.game.id).emit(ACTION_NAMES.PLAYER_LIST, playerList)
     }
