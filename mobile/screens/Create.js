@@ -40,8 +40,16 @@ export default function CreateGame() {
               <List.Item
                 key={player.user_id}
                 title={player.user_name}
-                description={player.is_game_master && 'GAME MASTER'}
-                left={props => <List.Icon {...props} icon="folder" />}
+                left={props => (
+                  <List.Icon
+                    {...props}
+                    icon={
+                      player.is_game_master
+                        ? 'account-check'
+                        : 'account-check-outline'
+                    }
+                  />
+                )}
               />
             ))}
           </List.Section>
