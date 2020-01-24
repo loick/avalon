@@ -1,11 +1,12 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { createGame, onPlayerAdded } from '../socket'
-import { ScrollView, View, StyleSheet, Title, Text } from 'react-native'
-import { List, ActivityIndicator } from 'react-native-paper'
+import { ScrollView, View, StyleSheet, Text } from 'react-native'
+import { List, Title, ActivityIndicator, Button } from 'react-native-paper'
+import { NB_MIN_PLAYERS, NB_MAX_PLAYERS } from '../config'
 
 export default function CreateGame() {
   const [gameId, setGameId] = useState(null)
-  const [players, addNewPlayer] = useState([])
+  const [players, updatePlayerList] = useState([])
 
   useEffect(() => {
     const createGameFn = async () => {
@@ -22,31 +23,47 @@ export default function CreateGame() {
   }, [])
 
   useEffect(() => {
-    onPlayerAdded(addNewPlayer)
+    onPlayerAdded(updatePlayerList)
   }, [])
 
-  return gameId ? (
+  const isTeamValid =
+    players.length > NB_MIN_PLAYERS && players.length < NB_MAX_PLAYERS
+
+  return (
     <ScrollView style={styles.container}>
-      <Fragment>
-        <Title>Game Created: {gameId}</Title>
-        <Text>Waiting for users to join...</Text>
-        <List.Section>
-          {players.map(player => (
-            <List.Item
-              title={player}
-              left={props => <List.Icon {...props} icon="folder" />}
-            />
-          ))}
-        </List.Section>
-      </Fragment>
+      {gameId ? (
+        <View>
+          <Title>Game Created: {gameId}</Title>
+          {players.length === 0 && <Text>Waiting for users to join...</Text>}
+          <List.Section>
+            {players.map(player => (
+              <List.Item
+                key={player.user_id}
+                title={player.user_name}
+                left={props => (
+                  <List.Icon
+                    {...props}
+                    icon={
+                      player.is_game_master
+                        ? 'account-check'
+                        : 'account-check-outline'
+                    }
+                  />
+                )}
+              />
+            ))}
+          </List.Section>
+          <Button disabled={!isTeamValid} mode="outlined">
+            Go with this team
+          </Button>
+        </View>
+      ) : (
+        <View style={styles.containerCreating}>
+          <Text style={styles.loadingLabel}>Creating the game room...</Text>
+          <ActivityIndicator activity={!gameId} />
+        </View>
+      )}
     </ScrollView>
-  ) : (
-    <View style={styles.containerCreating}>
-      <Fragment>
-        <Text style={styles.loadingLabel}>Creating the game room...</Text>
-        <ActivityIndicator activity={!gameId} />
-      </Fragment>
-    </View>
   )
 }
 
