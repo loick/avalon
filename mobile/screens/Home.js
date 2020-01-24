@@ -10,6 +10,7 @@ export default function Home({ navigation: { navigate } }) {
   useEffect(() => {
     const setUsername = async () => {
       await registerUsername(username)
+      // TODO: Add it to redux
     }
 
     if (formSubmitted) {

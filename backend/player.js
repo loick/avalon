@@ -3,9 +3,6 @@ export const MIN_NB_PLAYERS = 5
 export const getPlayerSummary = socket => ({
   user_id: socket.user_id,
   user_name: socket.user_name,
-  game_id: socket.game_id,
-  game_invite_code: socket.game_invite_code,
-  is_game_master: socket.is_game_master,
   role: socket.role,
 })
 

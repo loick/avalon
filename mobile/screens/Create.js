@@ -10,10 +10,11 @@ export default function CreateGame() {
 
   useEffect(() => {
     const createGameFn = async () => {
-      const { game_invite_code } = await createGame()
+      const { game } = await createGame()
 
-      if (game_invite_code) {
-        setGameId(game_invite_code)
+      if (game.invite_code) {
+        // TODO: set it to redux
+        setGameId(game.invite_code)
       }
     }
 
