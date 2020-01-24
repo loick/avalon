@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { createGame, onPlayerAdded } from '../socket'
 import { ScrollView, View, StyleSheet, Text } from 'react-native'
 import { List, Title, ActivityIndicator, Button } from 'react-native-paper'
+import { connect } from 'react-redux'
+import { setGameId } from '../redux/game'
 import { NB_MIN_PLAYERS, NB_MAX_PLAYERS } from '../config'
 
-export default function CreateGame() {
-  const [gameId, setGameId] = useState(null)
+const CreateGame = ({ dispatch, gameId }) => {
   const [players, updatePlayerList] = useState([])
 
   useEffect(() => {
@@ -13,8 +14,7 @@ export default function CreateGame() {
       const { game } = await createGame()
 
       if (game.invite_code) {
-        // TODO: set it to redux
-        setGameId(game.invite_code)
+        dispatch(setGameId(game.invite_code))
       }
     }
 
@@ -89,3 +89,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 })
+
+const mapStateToProps = state => {
+  return {
+    gameId: state.game.gameId,
+  }
+}
+
+export default connect(mapStateToProps)(CreateGame)

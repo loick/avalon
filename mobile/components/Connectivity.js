@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { StyleSheet } from 'react-native'
 import { Snackbar } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { setSocketReady } from '../redux/game'
@@ -23,13 +22,6 @@ const Connectivity = ({ dispatch, socketReady }) => {
     </Snackbar>
   )
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 32,
-    marginBottom: 20,
-  },
-})
 
 const mapStateToProps = state => {
   return {

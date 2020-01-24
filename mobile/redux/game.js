@@ -15,6 +15,7 @@ const initialState = {
 
 const SOCKET_READY = 'SOCKET_READY'
 const SOCKET_NOT_READY = 'SOCKET_NOT_READY'
+const ADD_GAME_ROOM = 'ADD_GAME_ROOM'
 
 //
 // Reducer...
@@ -26,6 +27,8 @@ const gameReducer = (state = initialState, action) => {
       return { ...state, socketReady: true }
     case SOCKET_NOT_READY:
       return { ...state, socketReady: false }
+    case ADD_GAME_ROOM:
+      return { ...state, gameId: action.id }
     default:
       return state
   }
@@ -44,5 +47,6 @@ export { configureStore }
 
 const setSocketReady = () => ({ type: SOCKET_READY })
 const setSocketNotReady = () => ({ type: SOCKET_NOT_READY })
+const setGameId = id => ({ type: ADD_GAME_ROOM, id })
 
-export { setSocketReady, setSocketNotReady }
+export { setSocketReady, setSocketNotReady, setGameId }
