@@ -74,8 +74,12 @@ io.on('connection', socket => {
       return
     }
 
+    socket.game.startGame()
+
     const roles = AVAILABLE_ROLES_PER_NB_PLAYERS[playerList.length]
     roles.sort(() => 0.5 - Math.random())
+
+    // TODO: Broadcast a startGame event
 
     playerList.forEach(player => {
       player.role = roles.pop()

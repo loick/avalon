@@ -28,7 +28,7 @@ class Game {
     this.invite_code = code
   }
 
-  startGamn() {
+  startGame() {
     this.game_started = true
   }
 
