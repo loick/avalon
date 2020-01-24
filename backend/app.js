@@ -78,7 +78,7 @@ io.on('connection', socket => {
   })
 
   socket.on(ACTION_NAMES.START_ROLE_SETUP, (_) => {
-    if (!(invite_code in games)) {
+    if (!(socket.is_game_master)) {
       callback({ error: ERRORS.USER_IS_NOT_GAME_MASTER })
       return
     }

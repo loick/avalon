@@ -77,10 +77,10 @@ export const ROLES = {
 }
 
 export const AVAILABLE_ROLES_PER_NB_PLAYERS = {
-    5: [ROLES.Merlin, ROLES.Mordred, ROLES.Assassin, Role.GoodGuy, Role.GoodGuy],
-    6: [ROLES.Merlin, ROLES.Mordred, ROLES.Assassin, Role.GoodGuy, Role.GoodGuy, Role.GoodGuy],
-    7: [ROLES.Merlin, ROLES.Percival, ROLES.Mordred, ROLES.Morgana, ROLES.Assassin, Role.GoodGuy, Role.GoodGuy],
-    8: [ROLES.Merlin, ROLES.Percival, ROLES.Mordred, ROLES.Morgana, ROLES.Assassin, Role.GoodGuy, Role.GoodGuy, Role.GoodGuy],
-    9: [ROLES.Merlin, ROLES.Percival, ROLES.Mordred, ROLES.Morgana, ROLES.Assassin, Role.GoodGuy, Role.GoodGuy, Role.GoodGuy, Role.GoodGuy],
-    10: [ROLES.Merlin, ROLES.Percival, ROLES.Mordred, ROLES.Morgana, ROLES.Assassin, ROLES.Oberon, Role.GoodGuy, Role.GoodGuy, Role.GoodGuy, Role.GoodGuy],
+    5: [ROLES.Merlin, ROLES.Mordred, ROLES.Assassin, ROLES.GoodGuy, ROLES.GoodGuy],
+    6: [ROLES.Merlin, ROLES.Mordred, ROLES.Assassin, ROLES.GoodGuy, ROLES.GoodGuy, ROLES.GoodGuy],
+    7: [ROLES.Merlin, ROLES.Percival, ROLES.Mordred, ROLES.Morgana, ROLES.Assassin, ROLES.GoodGuy, ROLES.GoodGuy],
+    8: [ROLES.Merlin, ROLES.Percival, ROLES.Mordred, ROLES.Morgana, ROLES.Assassin, ROLES.GoodGuy, ROLES.GoodGuy, ROLES.GoodGuy],
+    9: [ROLES.Merlin, ROLES.Percival, ROLES.Mordred, ROLES.Morgana, ROLES.Assassin, ROLES.GoodGuy, ROLES.GoodGuy, ROLES.GoodGuy, ROLES.GoodGuy],
+    10: [ROLES.Merlin, ROLES.Percival, ROLES.Mordred, ROLES.Morgana, ROLES.Assassin, ROLES.Oberon, ROLES.GoodGuy, ROLES.GoodGuy, ROLES.GoodGuy, ROLES.GoodGuy],
 }
