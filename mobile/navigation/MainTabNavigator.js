@@ -4,7 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 
 import TabBarIcon from '../components/TabBarIcon'
-import Home from '../screens/Home'
+import HomeLayout from '../layouts/HomeLayout'
 import Rules from '../screens/Rules'
 import Join from '../screens/Join'
 import Create from '../screens/Create'
@@ -14,7 +14,7 @@ const config = Platform.select({
   default: {},
 })
 
-const HomeStack = createStackNavigator({ Home, Create, Join }, config)
+const HomeStack = createStackNavigator({ HomeLayout, Create, Join }, config)
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',

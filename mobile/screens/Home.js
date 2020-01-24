@@ -75,10 +75,6 @@ export default function Home({ navigation: { navigate } }) {
   )
 }
 
-Home.navigationOptions = {
-  header: null,
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
