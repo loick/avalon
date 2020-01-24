@@ -14,6 +14,7 @@ export class Role {
   is_evil() {
     return !(this.is_good)
   }
+
 }
 
 export const ROLES = {
