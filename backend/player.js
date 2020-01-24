@@ -6,7 +6,7 @@ export const getPlayerSummary = socket => ({
   game_id: socket.game_id,
   game_invite_code: socket.game_invite_code,
   is_game_master: socket.is_game_master,
-  role: socket.role
+  role: socket.role,
 })
 
 export const getPlayersOnGame = (ioSockets, game_id) => {
