@@ -20,11 +20,12 @@ export default function Home({ navigation: { navigate } }) {
   return (
     <View style={styles.container}>
       <Title style={styles.title}>
-        Avalon ({gameReady ? 'Ready' : 'Not ready...'})
+        Avalon {!gameReady && '(Socket ready...)'}
       </Title>
       <Button
         style={styles.joinButton}
         mode="outlined"
+        disabled={!gameReady}
         onPress={() => navigate('Join')}
       >
         Join
@@ -32,6 +33,7 @@ export default function Home({ navigation: { navigate } }) {
       <Button
         style={styles.joinButton}
         mode="outlined"
+        disabled={!gameReady}
         onPress={() => navigate('Create')}
       >
         Create
