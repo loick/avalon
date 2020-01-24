@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node -r esm app.js",
+    "start": "nodemon -x 'node -r esm' app",
     "prettier": "prettier '**/*.js'",
     "precommit": "lint-staged"
   },
@@ -13,6 +13,7 @@
   "dependencies": {
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "nodemon": "^2.0.2",
     "precommit": "lint-staged",
     "prettier": "^1.19.1",
     "socket.io": "^2.3.0",
