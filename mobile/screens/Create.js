@@ -25,28 +25,28 @@ export default function CreateGame() {
     onPlayerAdded(addNewPlayer)
   }, [])
 
-  return (
+  return gameId ? (
     <ScrollView style={styles.container}>
-      {gameId ? (
-        <Fragment>
-          <Title>Game Created: {gameId}</Title>
-          <Text>Waiting for users to join...</Text>
-          <List.Section>
-            {players.map(player => (
-              <List.Item
-                title={player}
-                left={props => <List.Icon {...props} icon="folder" />}
-              />
-            ))}
-          </List.Section>
-        </Fragment>
-      ) : (
-        <View>
-          <Text>Creating the game room...</Text>
-          <ActivityIndicator activity={!gameId} />
-        </View>
-      )}
+      <Fragment>
+        <Title>Game Created: {gameId}</Title>
+        <Text>Waiting for users to join...</Text>
+        <List.Section>
+          {players.map(player => (
+            <List.Item
+              title={player}
+              left={props => <List.Icon {...props} icon="folder" />}
+            />
+          ))}
+        </List.Section>
+      </Fragment>
     </ScrollView>
+  ) : (
+    <View style={styles.containerCreating}>
+      <Fragment>
+        <Text style={styles.loadingLabel}>Creating the game room...</Text>
+        <ActivityIndicator activity={!gameId} />
+      </Fragment>
+    </View>
   )
 }
 
@@ -60,6 +60,15 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     backgroundColor: '#fff',
     justifyContent: 'center',
+  },
+  containerCreating: {
+    flex: 1,
+    paddingTop: 15,
+    backgroundColor: '#fff',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingLabel: {
+    marginBottom: 16,
   },
 })
