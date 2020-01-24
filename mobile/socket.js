@@ -8,10 +8,6 @@ const context = {
 
 const socket = io(API_URL)
 
-socket.on('connect', () => {
-  console.log(socket.id) // 'G5p5...'
-})
-
 const onJoiningGame = resolve => data => {
   context.game_id = data.game_id
   context.user_id = data.user_id
@@ -20,8 +16,7 @@ const onJoiningGame = resolve => data => {
 
   resolve(data)
 }
-export const sleep = time =>
-  new Promise(resolve => setTimeout(() => resolve(), time))
+const sleep = time => new Promise(resolve => setTimeout(() => resolve(), time))
 
 export const isConnected = () => {
   return new Promise(async (resolve, reject) => {

@@ -24,8 +24,6 @@ export default function Home({ navigation: { navigate } }) {
       await registerUsername(username)
     }
 
-    console.log('here', formSubmitted)
-
     if (formSubmitted) {
       setUsername()
     }

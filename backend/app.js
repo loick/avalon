@@ -6,8 +6,6 @@ const app = express()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 
-const games = []
-
 const getPlayerSummary = socket => ({
   user_id: socket.user_id,
   user_name: socket.user_name,
@@ -31,7 +29,6 @@ io.on('connection', socket => {
 
   socket.on(ACTION_NAMES.NEW_GAME, (_, callback) => {
     const new_game_id = uuid()
-    games.push(new_game_id)
     socket.join(new_game_id)
     socket.game_id = new_game_id
     socket.is_game_master = true
@@ -39,12 +36,12 @@ io.on('connection', socket => {
     const response = getPlayerSummary(socket)
     console.log('< new_game: ', response)
 
-    console.log(socket.rooms)
     callback(response)
   })
 
   socket.on(ACTION_NAMES.JOIN_GAME, ({ game_id }, callback) => {
-    if (!games.includes(game_id)) {
+    // Checks if room exists
+    if (!io.sockets.adapter.rooms[game_id]) {
       callback({ error: ERRORS.GAME_NOT_EXIST })
       return
     }
@@ -62,7 +59,6 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
-    socket.leave(socket.game_id)
     // TODO: If the user is the master, kill the room
     console.log('User disconnected: ', socket.user_id)
   })
