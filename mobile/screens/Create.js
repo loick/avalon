@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { createGame, onPlayerAdded } from '../socket'
 import { ScrollView, View, StyleSheet, Text } from 'react-native'
-import { List, Title, ActivityIndicator } from 'react-native-paper'
+import { List, Title, ActivityIndicator, Button } from 'react-native-paper'
+import { NB_MIN_PLAYERS, NB_MAX_PLAYERS } from '../config'
 
 export default function CreateGame() {
   const [gameId, setGameId] = useState(null)
@@ -22,11 +23,11 @@ export default function CreateGame() {
   }, [])
 
   useEffect(() => {
-    onPlayerAdded(p => {
-      console.log('received', p)
-      updatePlayerList(p)
-    })
+    onPlayerAdded(updatePlayerList)
   }, [])
+
+  const isTeamValid =
+    players.length > NB_MIN_PLAYERS && players.length < NB_MAX_PLAYERS
 
   return (
     <ScrollView style={styles.container}>
@@ -44,6 +45,9 @@ export default function CreateGame() {
               />
             ))}
           </List.Section>
+          <Button disabled={!isTeamValid} mode="outlined">
+            Go with this team
+          </Button>
         </View>
       ) : (
         <View style={styles.containerCreating}>
