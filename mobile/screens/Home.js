@@ -24,7 +24,7 @@ export default function Home({ navigation: { navigate } }) {
   return (
     <View style={styles.container}>
       <Title style={styles.title}>Avalon</Title>
-      {!formSubmitted && (
+      {!formSubmitted ? (
         <Fragment>
           <TextInput
             style={styles.input}
@@ -40,25 +40,32 @@ export default function Home({ navigation: { navigate } }) {
             Validate
           </Button>
         </Fragment>
+      ) : (
+        <Fragment>
+          <Button
+            style={styles.joinButton}
+            mode="outlined"
+            disabled={areButtonsDisabled}
+            onPress={() => navigate('Join')}
+          >
+            Join
+          </Button>
+          <Button
+            style={styles.joinButton}
+            mode="outlined"
+            disabled={areButtonsDisabled}
+            onPress={() => navigate('Create')}
+          >
+            Create
+          </Button>
+        </Fragment>
       )}
-      <Button
-        style={styles.joinButton}
-        mode="outlined"
-        disabled={areButtonsDisabled}
-        onPress={() => navigate('Join')}
-      >
-        Join
-      </Button>
-      <Button
-        style={styles.joinButton}
-        mode="outlined"
-        disabled={areButtonsDisabled}
-        onPress={() => navigate('Create')}
-      >
-        Create
-      </Button>
     </View>
   )
+}
+
+Home.navigationOptions = {
+  header: null,
 }
 
 const styles = StyleSheet.create({
