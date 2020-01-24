@@ -1,23 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Button, Title, Text, TextInput } from 'react-native-paper'
-import { isConnected, registerUsername } from '../socket'
+import { Button, Title, TextInput } from 'react-native-paper'
+import { registerUsername } from '../socket'
 
 export default function Home({ navigation: { navigate } }) {
-  const [gameReady, setGameReady] = useState(false)
   const [username, setUsername] = useState('')
   const [formSubmitted, setFormSubmitted] = useState(false)
-
-  useEffect(() => {
-    const prepareGameConnection = async () => {
-      const gameStatus = await isConnected()
-      setGameReady(gameStatus)
-    }
-
-    if (!gameReady) {
-      prepareGameConnection()
-    }
-  }, [])
 
   useEffect(() => {
     const setUsername = async () => {
@@ -29,15 +17,14 @@ export default function Home({ navigation: { navigate } }) {
     }
   }, [formSubmitted])
 
-  const areButtonsDisabled = !gameReady || !formSubmitted
+  // TODO get it from redux
+  // const areButtonsDisabled = !gameReady || !formSubmitted
+  const areButtonsDisabled = !formSubmitted
 
   return (
     <View style={styles.container}>
-      <Title style={styles.title}>
-        Avalon
-        {!gameReady && ' (Socket not ready...)'}
-      </Title>
-      {gameReady && !formSubmitted && (
+      <Title style={styles.title}>Avalon</Title>
+      {!formSubmitted && (
         <Fragment>
           <TextInput
             style={styles.input}

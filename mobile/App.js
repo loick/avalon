@@ -1,15 +1,28 @@
 import { AppLoading } from 'expo'
 import { Asset } from 'expo-asset'
 import * as Font from 'expo-font'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Platform, StatusBar, StyleSheet, View } from 'react-native'
+import { Title } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons'
 
-import GlobalContext from './GlobalContext'
 import AppNavigator from './navigation/AppNavigator'
+import { isConnected } from './socket'
 
 export default function App(props) {
+  const [gameReady, setGameReady] = useState(false)
   const [isLoadingComplete, setLoadingComplete] = useState(false)
+
+  useEffect(() => {
+    const prepareGameConnection = async () => {
+      const gameStatus = await isConnected()
+      setGameReady(gameStatus)
+    }
+
+    if (!gameReady) {
+      prepareGameConnection()
+    }
+  }, [])
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -23,6 +36,9 @@ export default function App(props) {
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+        {!gameReady && (
+          <Title style={styles.title}>(Socket not ready...)</Title>
+        )}
         <AppNavigator />
       </View>
     )
