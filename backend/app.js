@@ -76,10 +76,13 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
+    console.log('User disconnected: ', socket.user_id)
     if (socket.is_game_master) {
       // TODO: If the user is the master, kill the room
     }
-    console.log('User disconnected: ', socket.user_id)
+
+    const playerList = getPlayersOnGame(io.sockets, socket.game_id)
+    io.in(socket.game_id).emit(ACTION_NAMES.PLAYER_LIST, playerList)
   })
 })
 
