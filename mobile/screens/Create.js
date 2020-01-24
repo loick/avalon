@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { createGame, onPlayerAdded } from '../socket'
 import { ScrollView, View, StyleSheet, Text } from 'react-native'
-import { List, Title, ActivityIndicator } from 'react-native-paper'
+import { List, Title, ActivityIndicator, Button } from 'react-native-paper'
+import { NB_MIN_PLAYERS, NB_MAX_PLAYERS } from '../config'
 
 export default function CreateGame() {
   const [gameId, setGameId] = useState(null)
-  const [players, addNewPlayer] = useState([])
+  const [players, updatePlayerList] = useState([])
 
   useEffect(() => {
     const createGameFn = async () => {
@@ -22,23 +23,39 @@ export default function CreateGame() {
   }, [])
 
   useEffect(() => {
-    onPlayerAdded(addNewPlayer)
+    onPlayerAdded(updatePlayerList)
   }, [])
+
+  const isTeamValid =
+    players.length > NB_MIN_PLAYERS && players.length < NB_MAX_PLAYERS
 
   return (
     <ScrollView style={styles.container}>
       {gameId ? (
         <View>
           <Title>Game Created: {gameId}</Title>
-          <Text>Waiting for users to join...</Text>
+          {players.length === 0 && <Text>Waiting for users to join...</Text>}
           <List.Section>
             {players.map(player => (
               <List.Item
-                title={player}
-                left={props => <List.Icon {...props} icon="folder" />}
+                key={player.user_id}
+                title={player.user_name}
+                left={props => (
+                  <List.Icon
+                    {...props}
+                    icon={
+                      player.is_game_master
+                        ? 'account-check'
+                        : 'account-check-outline'
+                    }
+                  />
+                )}
               />
             ))}
           </List.Section>
+          <Button disabled={!isTeamValid} mode="outlined">
+            Go with this team
+          </Button>
         </View>
       ) : (
         <View style={styles.containerCreating}>

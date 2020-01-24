@@ -6,19 +6,7 @@ const context = {
   game_invite_code: null,
 }
 
-const socket = io(API_URL, {
-  timeout: 10000,
-  jsonp: false,
-  transports: ['websocket'],
-  autoConnect: true,
-  agent: '-',
-  pfx: '-',
-  cert: '-',
-  ca: '-',
-  ciphers: '-',
-  rejectUnauthorized: '-',
-  perMessageDeflate: '-',
-})
+const socket = io(API_URL)
 
 const onJoiningGame = resolve => data => {
   context.game_invite_code = data.game_invite_code
@@ -41,7 +29,6 @@ export const isConnected = () => {
 
 export const registerUsername = name => {
   return new Promise((resolve, reject) => {
-    console.log('here')
     socket.emit(ACTION_NAMES.PLAYER_NAME, { ...context, name }, resolve)
   })
 }
@@ -53,7 +40,7 @@ export const createGame = () => {
 }
 
 export const onPlayerAdded = cb => {
-  socket.on(ACTION_NAMES.NEW_PLAYER, cb)
+  socket.on(ACTION_NAMES.PLAYER_LIST, cb)
 }
 
 export const joinGame = id => {
