@@ -6,6 +6,7 @@ export const ACTION_NAMES = {
   JOIN_GAME: 'join_game',
   NEW_PLAYER: 'new_player',
   PLAYER_NAME: 'player_name',
+  REMOCE_PLAYER: 'remove_player',
 }
 
 export const ERRORS = {

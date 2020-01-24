@@ -40,6 +40,8 @@ io.on('connection', socket => {
 
     const response = getPlayerSummary(socket)
     console.log('< new_game: ', response)
+
+    console.log(socket.rooms)
     callback(response)
   })
 
@@ -53,6 +55,7 @@ io.on('connection', socket => {
     socket.game_id = game_id
     socket.is_game_master = false
 
+    // TODO: only send it to the master
     io.in(game_id).emit(ACTION_NAMES.NEW_PLAYER, socket.user_id)
 
     const response = getPlayerSummary(socket)
@@ -62,6 +65,7 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     socket.leave(socket.game_id)
+    // TODO: If the user is the master, kill the room
     console.log('User disconnected: ', socket.user_id)
   })
 })
